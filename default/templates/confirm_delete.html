@@ -1,0 +1,8 @@
+(%extends "base.html" %)
+
+{% block content%}
+{{ object}}
+<form action="" method="post">
+    {% csrf_token%}
+    <input type="sumit" value="確認刪除">
+</form>

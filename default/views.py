@@ -13,6 +13,39 @@ class PollEdit(UpdateView):
     model=Poll
     fields=['subject','desc']
     success_url='/poll/'
+class OptionCreate(CreateView):
+    model=Option
+    fields=['title','count']
+
+    def get_success_url(self):
+        return "/poll/{}/".format(self.kwargs['pid'])
+
+    def form_valid(self, form):
+        form.instance.poll_id = self.kwargs['pid']
+        return super().firm_valid(form)
+
+class OptionEdit(UpdateView):
+    model=Option
+    fields=['title', 'count']
+
+    def get_success_url(self):
+        return "/poll/{}/".format(self.object.poll_id)
+
+
+class OptionDelete(DeleteView):
+    model=Option
+
+    def get_success_url(self):
+        return "/poll{}/".format(self.object.poll_id)
+
+
+class PollDelete(DeleteView):
+    model=Poll
+    template_name=" confirm_delete.html"
+
+    def get_success_url(self):
+        return "/poll{}/".format(self.object.poll_id)
+
 
 
 class PollList(ListView):
